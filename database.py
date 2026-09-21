@@ -185,9 +185,6 @@ def create_schema(connection: SQLiteConnection) -> None:
     CREATE INDEX IF NOT EXISTS idx_versions_document ON document_versions(document_id);
     CREATE INDEX IF NOT EXISTS idx_versions_checksum ON document_versions(checksum_sha256);
     CREATE INDEX IF NOT EXISTS idx_embeddings_chunk ON embeddings(chunk_id);
-    CREATE INDEX IF NOT EXISTS idx_photo_references_created ON photo_references(created_at);
-    CREATE INDEX IF NOT EXISTS idx_training_photo_pairs_split
-        ON training_photo_pairs(split);
     """
 
     try:

@@ -147,15 +147,19 @@ activemq-data/
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environment
 .env
-.envrc
-.venv
-env/
+.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
+
+# Python
+__pycache__/
+*.pyc
+
+# SQLite databases
+*.sqlite
+*.sqlite3
+*.db
 
 # Spyder project settings
 .spyderproject

@@ -1,6 +1,14 @@
 import tempfile
 import os
+import sys
 from pathlib import Path
+
+
+if __package__ in {None, ""}:
+    sys.path.insert(
+        0,
+        str(Path(__file__).resolve().parent.parent),
+    )
 
 import gradio as gr
 from docx import Document
@@ -9,7 +17,7 @@ from docx.shared import Inches
 from tekst_model.database import create_connection, create_schema
 from tekst_model.document_repository import get_project_names
 
-from tekst_model import generate_text
+from tekst_model.text_generation import generate_text
 
 
 def initialize_database() -> None:
@@ -107,14 +115,13 @@ def validate_and_generate(
         ) from error
 
 
-with gr.Blocks(
-    title="FotoModel & Factuurgenerator",
-    theme=gr.themes.Base(
+APP_THEME = gr.themes.Base(
     primary_hue="cyan",
     secondary_hue="blue",
     neutral_hue="slate",
-),
-    css = """
+)
+
+APP_CSS = """
 :root {
     --tvb-blue: #222D4F;
     --tvb-blue-dark: #1A2340;
@@ -203,7 +210,7 @@ button[variant="secondary"] {
 }
 
 button.secondary:hover,
-button[variant="secondary"\]:hover {
+button[variant="secondary"]:hover {
     background: var(--tvb-green-dark) !important;
 }
 
@@ -233,7 +240,10 @@ select:focus {
     border-color: var(--tvb-green) !important;
     box-shadow: 0 0 0 3px rgba(56,181,168,.2) !important;
 }
-""",
+"""
+
+with gr.Blocks(
+    title="FotoModel & Factuurgenerator",
 ) as demo:
 
     gr.Markdown(
@@ -375,4 +385,6 @@ Genereer automatisch marketingteksten en download ze als Word-document.
 if __name__ == "__main__":
     initialize_database()
     demo.launch(
+    theme=APP_THEME,
+    css=APP_CSS,
     )
